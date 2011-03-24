@@ -1,0 +1,24 @@
+# Logfile created on Sat Nov 29 11:02:31 +0100 2008 by /
+D, [2008-11-29T11:02:31.531026 #7852] DEBUG -- : collection completion values for ''
+D, [2008-11-29T11:02:31.531129 #7852] DEBUG -- : completion proposals: 'reverse' 'test'
+D, [2008-11-29T11:02:31.531466 #7852] DEBUG -- : processing input 'reverse'
+D, [2008-11-29T11:02:31.531528 #7852] DEBUG -- : got command 'reverse' (params: )
+D, [2008-11-29T11:02:31.531590 #7852] DEBUG -- : command_selected: #<RHCP::Command:0xb7a99ab8>
+D, [2008-11-29T11:02:31.531648 #7852] DEBUG -- : selected command reverse
+D, [2008-11-29T11:02:31.531721 #7852] DEBUG -- : got 1 missing params : input
+D, [2008-11-29T11:02:31.531832 #7852] DEBUG -- : collection completion values for ''
+D, [2008-11-29T11:02:31.531924 #7852] DEBUG -- : completion proposals: 'zaphod' 'beeblebrox'
+D, [2008-11-29T11:02:31.532213 #7852] DEBUG -- : processing input 'does not exist'
+D, [2008-11-29T11:02:31.532277 #7852] DEBUG -- : got command 'does' (params: notexist)
+D, [2008-11-29T11:02:31.532604 #7852] DEBUG -- : processing input 'reverse'
+D, [2008-11-29T11:02:31.532666 #7852] DEBUG -- : got command 'reverse' (params: )
+D, [2008-11-29T11:02:31.532727 #7852] DEBUG -- : command_selected: #<RHCP::Command:0xb7a97c04>
+D, [2008-11-29T11:02:31.532784 #7852] DEBUG -- : selected command reverse
+D, [2008-11-29T11:02:31.532854 #7852] DEBUG -- : got 1 missing params : input
+D, [2008-11-29T11:02:31.532971 #7852] DEBUG -- : processing input 'zaphod'
+D, [2008-11-29T11:02:31.533036 #7852] DEBUG -- : accepted value zaphod for param input
+D, [2008-11-29T11:02:31.533098 #7852] DEBUG -- : finished parameter input mode for param input
+D, [2008-11-29T11:02:31.533702 #7852] DEBUG -- : processing input 'test'
+D, [2008-11-29T11:02:31.533766 #7852] DEBUG -- : got command 'test' (params: )
+D, [2008-11-29T11:02:31.533826 #7852] DEBUG -- : command_selected: #<RHCP::Command:0xb7a96228>
+D, [2008-11-29T11:02:31.533883 #7852] DEBUG -- : selected command test

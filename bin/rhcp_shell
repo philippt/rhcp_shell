@@ -1,0 +1,131 @@
+#!/usr/bin/env ruby
+
+require "readline"
+require "logger"
+require "getoptlong"
+
+require 'rubygems'
+
+require 'rhcp'
+
+require 'base_shell'
+require 'rhcp_shell_backend'
+require 'version'
+
+require 'uri'
+
+module RHCP
+  class Shell
+
+    def initialize()
+
+    end
+
+HELP_STRING = <<EOF
+
+RHCP Command Shell v #{RhcpShell::Version.to_s} (using RHCP library v #{RHCP::Version.to_s})
+
+Usage:
+  rhcp_shell.rb [--hostname=<hostname>] [--username=<username> --password=<password>]
+         [--help]
+
+Options:
+  --hostname=<hostname>
+    the URL to the RHCP server you want to connect against, e.g.
+      http://server.local.network/rhcp
+    If the specified hostname does not start with "http", it is automatically expanded to
+      http://<hostname>:42000/rhcp
+    You can optionally specify a port number to connect against like this:
+      http://myserver:42000
+    If you do not specify a hostname, the shell will try to connect against
+      http://localhost:42000
+
+  --username/--password
+    the authentication data you want to use for connecting to the RHCP server
+
+  --help
+    displays this help screen.
+
+EOF
+
+  def run
+    opts = GetoptLong.new(
+      [ '--help', '-h', GetoptLong::NO_ARGUMENT ],
+      [ '--username', '-u', GetoptLong::REQUIRED_ARGUMENT ],
+      [ '--password', '-p', GetoptLong::REQUIRED_ARGUMENT ],
+      [ '--hostname', GetoptLong::REQUIRED_ARGUMENT ],
+      [ '--port', '-P', GetoptLong::REQUIRED_ARGUMENT ]
+    )
+    
+    options = {
+      "hostname" => "localhost",
+      "port" => 42000      
+    }
+
+    options = Hash.new
+    opts.each do |opt, arg|
+      case opt
+        when '--help'
+          puts HELP_STRING
+          Kernel.exit(1)
+        else
+          opt =~ /--(.+)/
+          $logger.debug "setting #{arg} for #{$1}" unless $1 == "password"          
+          options[$1] = arg
+      end
+    end
+
+    host = options["hostname"]
+    if host == nil then
+      host = "http://localhost:42000"
+    elsif host !~ /http:/ then
+        host = "http://#{host}:42000/rhcp"
+    end
+    $logger.debug "now connecting to #{host}"
+
+    # TODO add interactive query for password!
+
+    begin
+      url = URI.parse(host)
+      
+    if (false)       
+      http_options = {
+        :host => options["hostname"],
+        :port => 80,
+        :path => "/rhcp"
+      }
+      if options.has_key?('username')
+        http_options[:userinfo] = "#{options['username']}:#{options['password']}"
+      end
+      url = URI::HTTP.build(http_options)
+    end
+    
+      @http_broker = RHCP::Client::HttpBroker.new(url)
+
+      backend = RHCPShellBackend.new(@http_broker)
+      backend.banner = <<EOF
+Good morning, this is the generic RHCP Shell (v #{RhcpShell::Version.to_s}, using RHCP library v #{RHCP::Version.to_s})
+Press <tab> for command completion or type "help" for a list of commands.
+If you want to exit this shell, please press Ctrl+C or type "exit".
+
+EOF
+      $logger.debug "backend has been instantiated : #{backend}"
+
+      shell = BaseShell.new(backend)
+      shell.run
+    rescue => ex
+      puts "There occurred an HTTP error while connecting to the RHCP server: #{ex}"
+      puts "Please connect against another server or fix the connection problem."
+      puts ex.backtrace.join("\n")
+    end
+  end
+end
+end
+  
+# TODO introduce something like the RAILS_ENVs
+$logger = Logger.new("rhcp_shell.log")
+$logger.level = Logger::DEBUG
+RHCP::ModuleHelper.instance().logger = $logger
+
+shell = RHCP::Shell.new
+shell.run
