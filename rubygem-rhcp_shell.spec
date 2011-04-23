@@ -6,7 +6,7 @@
 
 Summary: RHCP is a protocol designed for building up a command-metadata-based communication infrastructure making it easier for application developers to export commands in applications to generic clients - this is the generic shell for it
 Name: rubygem-%{gemname}
-Version: 0.2.11
+Version: 0.2.13
 Release: 1%{?dist}
 Group: Development/Languages
 License: GPLv2+ or Ruby
@@ -53,6 +53,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Apr 22 2011 xop <philipp@xop-consulting.com> - 0.2.13-1
+- bugfix: the request constructor was inadvertently modifying parameter values.
 * Wed Feb 16 2011 xop <philipp@xop-consulting.com> - 0.2.11-1
 - added support for setting the prompt through a cookie
 - added color support for result status
