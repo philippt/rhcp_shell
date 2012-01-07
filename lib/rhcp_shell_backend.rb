@@ -7,10 +7,11 @@ require 'local_commands/context'
 require 'local_commands/set_prompt'
 
 require 'display_types/table'
+require 'display_types/hash'
 
 require 'rubygems'
 require 'rhcp'
-require 'rhcp/memcached_broker'
+#require 'rhcp/memcached_broker'
 
 # This shell presents RHCP commands to the user and handles all the parameter
 # lookup, validation and command completion stuff
@@ -193,6 +194,9 @@ class RHCPShellBackend < ShellBackend
         $logger.debug "display_type : #{command.result_hints[:display_type]}"
         if command.result_hints[:display_type] == "table"
           output = format_table_output(command, response)
+          puts output
+        elsif command.result_hints[:display_type] == "hash"
+          output = format_hash_output(command, response)
           puts output
         elsif command.result_hints[:display_type] == "list"
           output = ""
