@@ -44,7 +44,12 @@ def add_help_commands(broker)
         if command.params.size > 0 then
           puts "Parameters:"
           command.params.sort { |a,b| a.name <=> b.name }.each do |param|
-            puts sprintf("  %-20s %s\n", param.name, param.description)
+            default_value = param.default_value != nil ? " (default: #{param.default_value})" : ''
+            param_name = param.name
+            if param.is_default_param
+              param_name += " *"
+            end
+            puts sprintf("  %-20s %s%s\n", param_name, param.description, default_value)
           end
        end
        puts ""
