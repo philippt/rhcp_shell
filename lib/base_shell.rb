@@ -101,6 +101,7 @@ class BaseShell
           Kernel.exit
         else
           puts "got an error in @thread.join: #{error}"
+          puts error.backtrace.join("\n")
         end
         
       end
