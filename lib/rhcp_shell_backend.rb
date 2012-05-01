@@ -192,6 +192,12 @@ class RHCPShellBackend < ShellBackend
         $logger.debug "raw result : #{response.data}"
         $logger.debug "result hints: #{command.result_hints}"
         $logger.debug "display_type : #{command.result_hints[:display_type]}"
+        
+        #if not command.result_hints.has_key? :display_type
+        #  puts response.data.class
+        #end
+        
+        
         if command.result_hints[:display_type] == "table"
           output = format_table_output(command, response)
           puts output
@@ -310,7 +316,14 @@ class RHCPShellBackend < ShellBackend
                   @current_param = @command_selected.get_param(key)
                   add_parameter_value(value)
                 rescue RHCP::RhcpException => ex
-                  puts "ignoring parameter value '#{value}' for param '#{key}' : " + ex.to_s
+                  if @command_selected.accepts_extra_params
+                    puts "collecting value for extra param : #{key} => #{value}"
+                    @collected_values["extra_params"] = {} unless @collected_values.has_key?("extra_params")
+                    @collected_values["extra_params"][key] = Array.new if @collected_values["extra_params"][key] == nil
+                    @collected_values["extra_params"][key] << [ value ]
+                  else
+                    puts "ignoring parameter value '#{value}' for param '#{key}' : " + ex.to_s
+                  end
                 end
               end
             end
