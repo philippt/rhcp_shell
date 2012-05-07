@@ -184,11 +184,7 @@ class RHCPShellBackend < ShellBackend
       request = RHCP::Request.new(command, @collected_values)
       response = @command_broker.execute(request)
 
-      # we might want to access this response in further commands
-      @last_response = response
-
       if (response.status == RHCP::Response::Status::OK)
-        
         $logger.debug "raw result : #{response.data}"
         $logger.debug "result hints: #{command.result_hints}"
         $logger.debug "display_type : #{command.result_hints[:display_type]}"
@@ -197,8 +193,10 @@ class RHCPShellBackend < ShellBackend
         #  puts response.data.class
         #end
         
-        
         if command.result_hints[:display_type] == "table"
+          # we might want to access this response in further commands
+          @last_response = response
+          
           output = format_table_output(command, response)
           puts output
         elsif command.result_hints[:display_type] == "hash"
