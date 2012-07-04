@@ -193,9 +193,9 @@ class RHCPShellBackend < ShellBackend
         #  puts response.data.class
         #end
         
+        @last_response = response
         if command.result_hints[:display_type] == "table"
           # we might want to access this response in further commands
-          @last_response = response
           
           output = format_table_output(command, response)
           puts output
@@ -210,6 +210,8 @@ class RHCPShellBackend < ShellBackend
           puts output
         elsif command.result_hints[:display_type] == "hidden"
           $logger.debug "suppressing output due to display_type 'hidden'"
+        elsif command.result_hints[:display_type] == "raw"
+          p output
         else
           puts "executed '#{@command_selected.name}' successfully : #{@prompt_color_enabled ? green(response.data) : response.data}"
         end
