@@ -213,7 +213,11 @@ class RHCPShellBackend < ShellBackend
         elsif command.result_hints[:display_type] == "raw"
           p output
         else
-          puts "executed '#{@command_selected.name}' successfully : #{@prompt_color_enabled ? green(response.data) : response.data}"
+          if @prompt_color_enabled
+            puts "#{green(@command_selected.name)} : #{response.data}"
+          else
+            puts "executed '#{@command_selected.name}' successfully : #{response.data}"
+          end
         end
         
         # if the command has been executed successfully, we might have to update the prompt
@@ -227,8 +231,12 @@ class RHCPShellBackend < ShellBackend
           Kernel.exit(0)
         end
         
-        puts "could not execute '#{@command_selected.name}' : #{@prompt_color_enabled ? red(response.error_text) : response.error_text}"
-        $logger.error "#{response.error_text} : #{response.error_detail}"
+        if @prompt_color_enabled
+          puts "#{red(@command_selected.name)} : #{response.error_text}"
+        else
+          puts "could not execute '#{@command_selected.name}' : #{response.error_text}"
+        end
+        $logger.error "[#{@command_selected.name}] #{response.error_text} : #{response.error_detail}"
         
         set_prompt nil
       end
