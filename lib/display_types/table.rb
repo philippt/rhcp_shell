@@ -22,12 +22,16 @@ def format_table_output(command, response)
     
     # TODO the sorting column should be configurable
     if response.data.size > 0
-      first_column = columns_to_display[0]
-      $logger.debug "sorting by #{first_column}"
-      if response.data.first.has_key? first_column
-        response.data = response.data.sort { |a,b| a[first_column] <=> b[first_column] }          
-      else
-        $logger.info "not sorting output because first defined column '#{first_column}' is missing in response data"      
+      begin
+        first_column = columns_to_display[0]
+        $logger.debug "sorting by #{first_column}"      
+        if response.data.first.has_key? first_column
+          response.data = response.data.sort { |a,b| a[first_column] <=> b[first_column] }          
+        else
+          $logger.info "not sorting output because first defined column '#{first_column}' is missing in response data"      
+        end
+      rescue => detail
+        $logger.warn "got a problem while sorting the output : #{detail.message}"
       end
     end
     
