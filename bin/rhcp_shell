@@ -7,10 +7,7 @@ require "getoptlong"
 require 'rubygems'
 
 require 'rhcp'
-
-require 'base_shell'
-require 'rhcp_shell_backend'
-require 'version'
+require 'rhcp_shell'
 
 require 'uri'
 
