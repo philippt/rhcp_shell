@@ -1,2 +1,5 @@
 .dropbox
 pkg
+.log
+rhcp.log
+rhcp_shell.log
