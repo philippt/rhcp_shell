@@ -1,13 +1,15 @@
-require 'shell_backend.rb'
+require 'rhcp_shell/shell_backend.rb'
 
-require 'local_commands/help'
-require 'local_commands/detail'
-require 'local_commands/exit'
-require 'local_commands/context'
-require 'local_commands/set_prompt'
+require 'rhcp_shell/local_commands/help'
+require 'rhcp_shell/local_commands/detail'
+require 'rhcp_shell/local_commands/exit'
+require 'rhcp_shell/local_commands/context'
+require 'rhcp_shell/local_commands/set_prompt'
 
-require 'display_types/table'
-require 'display_types/hash'
+require 'rhcp_shell/display_types/table'
+require 'rhcp_shell/display_types/hash'
+
+require 'rhcp_shell/util/colorize'
 
 require 'rubygems'
 require 'rhcp'
@@ -374,8 +376,6 @@ class RHCPShellBackend < ShellBackend
   def show_banner
     puts @banner
   end
-  
-  require 'util/colorize'
   
   def prompt
     if @current_param != nil

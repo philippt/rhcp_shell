@@ -49,6 +49,9 @@ def add_help_commands(broker)
             if param.is_default_param
               param_name += " *"
             end
+            if param.allows_extra_values
+              param_name += " ~"
+            end
             puts sprintf("  %-20s %s%s\n", param_name, param.description, default_value)
           end
        end
