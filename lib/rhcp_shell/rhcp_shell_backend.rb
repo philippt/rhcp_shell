@@ -330,7 +330,7 @@ class RHCPShellBackend < ShellBackend
                     puts "collecting value for extra param : #{key} => #{value}"
                     @collected_values["extra_params"] = {} unless @collected_values.has_key?("extra_params")
                     @collected_values["extra_params"][key] = Array.new if @collected_values["extra_params"][key] == nil
-                    @collected_values["extra_params"][key] << [ value ]
+                    @collected_values["extra_params"][key] << value
                   else
                     puts "ignoring parameter value '#{value}' for param '#{key}' : " + ex.to_s
                   end

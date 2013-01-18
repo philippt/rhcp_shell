@@ -54,6 +54,9 @@ def add_help_commands(broker)
             end
             puts sprintf("  %-20s %s%s\n", param_name, param.description, default_value)
           end
+          if command.accepts_extra_params
+            puts "This command accepts extra parameters."
+          end
        end
        puts ""
       else
