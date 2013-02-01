@@ -97,7 +97,7 @@ EOF
       url = URI::HTTP.build(http_options)
     end
     
-      @http_broker = RHCP::Client::HttpBroker.new(url)
+      @http_broker = RHCP::Client::HttpBroker.new(url, options['username'], options['password'])
 
       backend = RHCPShellBackend.new(@http_broker)
       backend.banner = <<EOF
