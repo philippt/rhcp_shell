@@ -7,7 +7,7 @@ module RhcpShell #:nodoc:
 
     MAJOR = 0
     MINOR = 2
-    TINY  = 13
+    TINY  = 21
 
     def Version.to_s
       [ MAJOR, MINOR, TINY ].join(".")
