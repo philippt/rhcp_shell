@@ -45,6 +45,7 @@ def add_help_commands(broker)
           puts "Parameters:"
           command.params.sort { |a,b| a.name <=> b.name }.each do |param|
             default_value = param.default_value != nil ? " (default: #{param.default_value})" : ''
+            context_key = param.autofill_context_key != nil ? " (context key: #{param.autofill_context_key})" : ''
             param_name = param.name
             if param.is_default_param
               param_name += " *"
@@ -52,7 +53,7 @@ def add_help_commands(broker)
             if param.allows_extra_values
               param_name += " ~"
             end
-            puts sprintf("  %-20s %s%s\n", param_name, param.description, default_value)
+            puts sprintf("  %-20s %s%s%s\n", param_name, param.description, default_value, context_key)
           end
           if command.accepts_extra_params
             puts "This command accepts extra parameters."
