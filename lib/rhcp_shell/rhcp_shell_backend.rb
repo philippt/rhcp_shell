@@ -354,7 +354,7 @@ class RHCPShellBackend < ShellBackend
   end
   
   def complete(word = "")
-    $logger.debug "collecting completion values for '#{word}'"
+    #$logger.debug "collecting completion values for '#{word}'"
     
     Thread.current['broker'] = @command_broker
 
