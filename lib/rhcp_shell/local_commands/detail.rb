@@ -14,10 +14,11 @@ def add_detail_command(broker)
         puts "invalid row index - please specify a number between 1 and #{row_count}"  
         return
       end
-      puts "displaying details about row \# #{row_index}"          
-      @last_response.data[row_index - 1].each do |k,v|
-        puts "  #{k}\t#{v}"
-      end
+      puts "displaying details about row \# #{row_index}"
+      @last_response.data[row_index - 1]          
+      # @last_response.data[row_index - 1].each do |k,v|
+        # puts "  #{k}\t#{v}"
+      # end
 
     }
     ).add_param(RHCP::CommandParam.new("row_index", "the index of the row you want to see details about",
@@ -27,7 +28,8 @@ def add_detail_command(broker)
       }
     )
   )
-  command.result_hints[:display_type] = "hidden"
+  #command.result_hints[:display_type] = "hidden"
+  command.result_hints[:display_type] = "hash"
   broker.register_command command
   
 end  
