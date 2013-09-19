@@ -183,7 +183,12 @@ class RHCPShellBackend < ShellBackend
     begin
       $logger.debug("(ShellBackend) gonna execute command '#{@command_selected.name}' on broker '#{@command_broker}'")
       command = @command_broker.get_command(@command_selected.name)
-      request = RHCP::Request.new(command, @collected_values)
+      context = RHCP::Context.new()
+      if @command_broker.context.request_context_id
+        puts "setting request context id to #{@command_broker.context.request_context_id}"
+        context.request_context_id = @command_broker.context.request_context_id
+      end
+      request = RHCP::Request.new(command, @collected_values, context)
       response = @command_broker.execute(request)
 
       if (response.status == RHCP::Response::Status::OK)
